@@ -10,6 +10,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "com.example.sarah.squashtimer.MESSAGE";
     public static final String EXTRA_MESSAGE2 = "com.example.sarah.squashtimer.MESSAGE2";
+    public static final String EXTRA_MESSAGE3 = "com.example.sarah.squashtimer.MESSAGE3";
+    public static final String EXTRA_MESSAGE4 = "com.example.sarah.squashtimer.MESSAGE4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         EditText editText2 = (EditText) findViewById(R.id.ghostSpacing);
         String message2 = editText2.getText().toString();
         intent.putExtra(EXTRA_MESSAGE2, message2);
+        EditText editText3 = (EditText) findViewById(R.id.restTime);
+        String message3 = editText3.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE3, message3);
+        EditText editText4 = (EditText) findViewById(R.id.noRepeats);
+        String message4 = editText4.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE4, message4);
         startActivity(intent);
     }
 }

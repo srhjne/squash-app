@@ -38,7 +38,7 @@ public class Drill extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        String message = "Ready?";
         final long noGhosts = Long.parseLong(intent.getStringExtra(MainActivity.EXTRA_MESSAGE));
 
         // Capture the layout's TextView and set the string as its text
@@ -59,25 +59,37 @@ public class Drill extends AppCompatActivity {
             Intent intent = getIntent();
             final long noGhosts = Long.parseLong(intent.getStringExtra(MainActivity.EXTRA_MESSAGE));
             final long ghostSpacing = Long.parseLong(intent.getStringExtra(MainActivity.EXTRA_MESSAGE2));
+            final long restTime = Long.parseLong(intent.getStringExtra(MainActivity.EXTRA_MESSAGE3));
+            final long noRepeat = Long.parseLong(intent.getStringExtra(MainActivity.EXTRA_MESSAGE4));
 
             final long timeInterval = 1000*ghostSpacing;
             long offSet = 500;
             final Random randomizer = new Random();
+            final long cutOff = noGhosts*timeInterval;
+            final long intervalTime = 1000*(ghostSpacing*noGhosts+restTime);
+            final long totalTime = intervalTime*noRepeat;
 
 
-            new CountDownTimer((noGhosts)*timeInterval+offSet, timeInterval) {
+
+            new CountDownTimer(totalTime, timeInterval) {
                 TextView textView = findViewById(R.id.textView);
                 public void onTick(long millisUntilFinished) {
-                    long nCounter = millisUntilFinished/timeInterval - 1;
+//                    long nCounter = millisUntilFinished/timeInterval - 1;
 //                    String message = importantInfo[(int) nCounter];
-                    String message = importantInfo[randomizer.nextInt(importantInfo.length)];
-                    textView.setText(message);
+                    if ((totalTime - millisUntilFinished) % intervalTime < cutOff) {
+                        String message = importantInfo[randomizer.nextInt(importantInfo.length)];
+                        textView.setText(message);
+                    } else {
+                        textView.setText("REST");
+                    }
                 }
 
                 public void onFinish() {
                     textView.setText("done!");
                 }
             }.start();
+
+
 
 //            try {
 //                mHandler.removeCallbacks(SleepMessages);
